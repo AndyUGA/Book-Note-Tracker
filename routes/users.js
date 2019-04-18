@@ -13,7 +13,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 const User = require("../models/User");
 
 //Login page
-router.get("/login", (req, res) => res.render("Login"));
+router.get("/login", (req, res) => res.render("login"));
 
 //Register page
 router.get("/register", (req, res) => res.render("register"));
@@ -101,35 +101,5 @@ router.get("/logout", (req, res) => {
   req.flash("success_msg", "You are logged out");
   res.redirect("/users/login");
 });
-
-router.post("/createBookEntry/:name", (req, res, next) => {
-  const name = req.params.name;
-  client.connect(err => {
-    const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name }, { $set: { Title: "Book1" } });
-
-    client.close();
-    res.send("Book was created successfully");
-  });
-});
-
-/*
-app.put("/:id/:name/updateNotes", (req, res) => {
-  const id = req.params.id;
-  const name = req.params.name;
-
-  const note = { content: req.body.content };
-
-  const details = { _id: new ObjectID(id) };
-  db.collection(name).update(details, note, (err, item) => {
-    if (err) {
-      res.send({ error: " An error has occurred" });
-    } else {
-      res.redirect("/" + name + "/getNotes");
-    }
-  });
-});
-};
-*/
 
 module.exports = router;

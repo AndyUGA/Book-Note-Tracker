@@ -6,12 +6,21 @@
 
 
 <br><br>
-<form action = "/users/createBookEntry/<%=name%>" class="form-horizontal " method="post">
+<form action = "/createBookEntry/<%=name%>" class="form-horizontal " method="post">
   <div class="form-group">
     <label for="exampleInputEmail1">Book Title</label>
-    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Book Title">
+    <input type="text" class="form-control" name="title" placeholder="Enter Book Title">
 
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+
+
+<p> Book Titles </p>
+
+
+<% for(var i=0; i < result.Books.length; i++) { %>
+<%= result.Books[i] %>
+<br>
+<% } %>
