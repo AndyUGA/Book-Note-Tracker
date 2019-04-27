@@ -18,11 +18,8 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
       if (err) {
         res.send({ error: " An error has occurred" });
       } else {
-        console.log("Result length is " + result.length);
-
         const currentID = { _id: ObjectID(req.user._id) };
-        console.log("24");
-        console.log(currentID._id);
+
         for (let i = 0; i < result.length; i++) {
           let dbID = { _id: ObjectID(result[i]._id) };
           //console.log("Comparing " + currentID._id + " with " + dbID._id);
