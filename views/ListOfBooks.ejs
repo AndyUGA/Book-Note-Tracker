@@ -12,6 +12,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
    </head>
    <body>
+     <form action = "/insertNote/<%=index%>/<%=name%>/<%=bookTitle%>" class="form-horizontal " method="post">
+       <div class="form-group">
+         <label for="exampleInputEmail1">Enter Note</label>
+         <input type="text" class="form-control" name="title" placeholder="Enter Note ">
+
+       </div>
+
+       <button type="submit" class="btn btn-primary">Submit</button>
+     </form>
+
+
      <% for(var j=0; j < result.BookTitle.length; j++) { %>
      <%= result.BookTitle[index].Note[j] %>
      <br>

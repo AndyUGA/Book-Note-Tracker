@@ -21,7 +21,7 @@ mongoose
     { useNewUrlParser: true }
   )
   .then(() => console.log("MongoDB Connected..."))
-  .catch(err => console.log(err));
+  .catch(err => console.log());
 
 //EJS layouts
 app.use(expressLayouts);

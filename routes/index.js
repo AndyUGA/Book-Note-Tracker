@@ -20,8 +20,8 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
       if (err) {
         res.send({ error: " An error has occurred" });
       } else {
-        console.log(result);
-        console.log("Result length is " + result.length);
+        //console.log(result);
+        //console.log("Result length is " + result.length);
 
         const currentID = { _id: ObjectID(req.user._id) };
         //console.log("24");
@@ -32,8 +32,8 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
           if (currentID._id.equals(dbID._id)) {
             //console.log("Name is " + req.user.name
             result = result[i];
-            console.log("Result is");
-            console.log(result);
+            //console.log("Result is");
+            //console.log(result);
           }
         }
 
@@ -48,10 +48,12 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/getListOfBooks/:index", ensureAuthenticated, (req, res) => {
+router.get("/getListOfBooks/:index/:name", ensureAuthenticated, (req, res) => {
   const index = req.params.index;
+  const name = req.params.name;
   client.connect(err => {
     const collection = client.db("test").collection("users");
+    let bookTitle;
     collection.find({}).toArray(function(err, result) {
       if (err) {
         res.send({ error: " An error has occurred" });
@@ -61,14 +63,17 @@ router.get("/getListOfBooks/:index", ensureAuthenticated, (req, res) => {
           let dbID = { _id: ObjectID(result[i]._id) };
           if (currentID._id.equals(dbID._id)) {
             result = result[i];
-            console.log("Result is");
-            console.log(result);
+            bookTitle = result.BookTitle[index].Title;
+            //console.log("Result is");
+            //console.log(result);
           }
         }
 
         res.render("ListOfBooks", {
           result: result,
-          index: index
+          index: index,
+          name: name,
+          bookTitle: bookTitle
         });
       }
     });
@@ -83,6 +88,32 @@ router.post("/createBookEntry/:name", (req, res, next) => {
   client.connect(err => {
     const collection = client.db("test").collection("users");
     collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: ["Note2"] } } });
+
+    res.redirect("/dashboard");
+  });
+});
+
+router.post("/insertNote/:index/:name/:bookTitle", (req, res, next) => {
+  const name = req.params.name;
+  const index = req.params.index;
+  const title = req.body.title;
+  const bookTitle = req.params.bookTitle;
+  let tempData = { Title2: title };
+  //const indexPosition = "BookTitle." + index + ".Note";
+  const indexPosition = "BookTitle.0.Note";
+  const indexPosition2 = "BookTitle." + index.toString(10) + ".Note";
+
+  console.log("indexPosition is " + indexPosition);
+  console.log("indexPosition2 is " + indexPosition2);
+  console.log(typeof indexPosition);
+  console.log(typeof indexPosition2);
+  console.log("");
+  console.log("");
+  console.log("");
+
+  client.connect(err => {
+    const collection = client.db("test").collection("users");
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": "note8" } });
 
     res.redirect("/dashboard");
   });
