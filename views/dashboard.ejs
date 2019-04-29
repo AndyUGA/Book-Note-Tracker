@@ -50,14 +50,18 @@
 <% for(var i=0; i < result.BookTitle.length; i++) { %>
   <div class = "text-center">
   <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
-    <a>
+    <a href= "/getListOfBooks">
   <%= result.BookTitle[i].Title %>
+    </a>
+
+  <!--
   <br>
   <% for(var j=0; j < result.BookTitle.length; j++) { %>
   <%= result.BookTitle[j].Note[j] %>
   <br>
   <% } %>
-    </a>
+  -->
+
     </div>
     </div>
 
