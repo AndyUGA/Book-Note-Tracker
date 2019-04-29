@@ -48,15 +48,14 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/getListOfBooks", ensureAuthenticated, (req, res) => {
+router.get("/getListOfBooks/:index", ensureAuthenticated, (req, res) => {
+  const index = req.params.index;
   client.connect(err => {
     const collection = client.db("test").collection("users");
     collection.find({}).toArray(function(err, result) {
       if (err) {
         res.send({ error: " An error has occurred" });
       } else {
-        console.log(result);
-        console.log("Result length is " + result.length);
         const currentID = { _id: ObjectID(req.user._id) };
         for (let i = 0; i < result.length; i++) {
           let dbID = { _id: ObjectID(result[i]._id) };
@@ -68,7 +67,8 @@ router.get("/getListOfBooks", ensureAuthenticated, (req, res) => {
         }
 
         res.render("ListOfBooks", {
-          result: result
+          result: result,
+          index: index
         });
       }
     });
@@ -82,10 +82,7 @@ router.post("/createBookEntry/:name", (req, res, next) => {
   let tempData = { Title2: title };
   client.connect(err => {
     const collection = client.db("test").collection("users");
-    collection.updateOne(
-      { name: name },
-      { $push: { BookTitle: { Title: title, Note: ["Note2"] } } }
-    );
+    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: ["Note2"] } } });
 
     res.redirect("/dashboard");
   });
