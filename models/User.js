@@ -16,6 +16,9 @@ const UserSchema = new mongoose.Schema({
   data: {
     type: Date,
     default: Date.now
+  },
+  BookTitle: {
+    type: Array
   }
 });
 

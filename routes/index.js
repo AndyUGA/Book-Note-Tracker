@@ -87,7 +87,7 @@ router.post("/createBookEntry/:name", (req, res, next) => {
   let tempData = { Title2: title };
   client.connect(err => {
     const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: [""] } } });
+    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: [] } } });
 
     res.redirect("/dashboard");
   });
