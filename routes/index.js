@@ -48,7 +48,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/getListOfBooks/:index/:name", ensureAuthenticated, (req, res) => {
+router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
   const index = req.params.index;
   const name = req.params.name;
   client.connect(err => {
@@ -69,7 +69,7 @@ router.get("/getListOfBooks/:index/:name", ensureAuthenticated, (req, res) => {
           }
         }
 
-        res.render("ListOfBooks", {
+        res.render("BookNotes", {
           result: result,
           index: index,
           name: name,
@@ -104,7 +104,7 @@ router.post("/insertNote/:index/:name/:bookTitle", (req, res, next) => {
     const collection = client.db("test").collection("users");
     collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": note } });
 
-    res.redirect("/getListOfBooks/" + index + "/" + name);
+    res.redirect("/getBookNotes/" + index + "/" + name);
   });
 });
 
