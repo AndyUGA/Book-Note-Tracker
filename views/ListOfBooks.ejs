@@ -12,23 +12,17 @@
       <meta name="viewport" content="width=device-width, initial-scale=1">
    </head>
    <body>
+     <br>
+     <h2 class = "text-center"> Current Notes </h2>
      <form action = "/insertNote/<%=index%>/<%=name%>/<%=bookTitle%>" class="form-horizontal " method="post">
        <div class="form-group">
-         <label for="exampleInputEmail1">Enter Note</label>
          <input type="text" class="form-control" name="note" placeholder="Enter Note ">
-
        </div>
-
        <button type="submit" class="btn btn-primary">Submit</button>
+
      </form>
-
-
-
-  
-
-
-
-      <% for(var j=0; j < result.BookTitle.length; j++) { %>
+        <br>
+      <% for(var j=0; j < result.BookTitle[index].Note.length; j++) { %>
        <div class = "text-center">
        <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
 
