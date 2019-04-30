@@ -15,7 +15,7 @@
      <form action = "/insertNote/<%=index%>/<%=name%>/<%=bookTitle%>" class="form-horizontal " method="post">
        <div class="form-group">
          <label for="exampleInputEmail1">Enter Note</label>
-         <input type="text" class="form-control" name="title" placeholder="Enter Note ">
+         <input type="text" class="form-control" name="note" placeholder="Enter Note ">
 
        </div>
 
@@ -23,10 +23,29 @@
      </form>
 
 
-     <% for(var j=0; j < result.BookTitle.length; j++) { %>
-     <%= result.BookTitle[index].Note[j] %>
+
+  
+
+
+
+      <% for(var j=0; j < result.BookTitle.length; j++) { %>
+       <div class = "text-center">
+       <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
+
+          <%= result.BookTitle[index].Note[j] %>
+         </div>
+         </div>
+
      <br>
      <% } %>
+
+
+
+
+
+
+
+
 
   </body>
 

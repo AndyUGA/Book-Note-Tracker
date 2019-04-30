@@ -87,7 +87,7 @@ router.post("/createBookEntry/:name", (req, res, next) => {
   let tempData = { Title2: title };
   client.connect(err => {
     const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: ["Note2"] } } });
+    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: [""] } } });
 
     res.redirect("/dashboard");
   });
@@ -98,24 +98,13 @@ router.post("/insertNote/:index/:name/:bookTitle", (req, res, next) => {
   const index = req.params.index;
   const title = req.body.title;
   const bookTitle = req.params.bookTitle;
-  let tempData = { Title2: title };
-  //const indexPosition = "BookTitle." + index + ".Note";
-  const indexPosition = "BookTitle.0.Note";
-  const indexPosition2 = "BookTitle." + index.toString(10) + ".Note";
-
-  console.log("indexPosition is " + indexPosition);
-  console.log("indexPosition2 is " + indexPosition2);
-  console.log(typeof indexPosition);
-  console.log(typeof indexPosition2);
-  console.log("");
-  console.log("");
-  console.log("");
+  const note = req.body.note;
 
   client.connect(err => {
     const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": "note8" } });
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": note } });
 
-    res.redirect("/dashboard");
+    res.redirect("/getListOfBooks/" + index + "/" + name);
   });
 });
 
