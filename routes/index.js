@@ -20,25 +20,21 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
       if (err) {
         res.send({ error: " An error has occurred" });
       } else {
-        //console.log(result);
-        //console.log("Result length is " + result.length);
-
         const currentID = { _id: ObjectID(req.user._id) };
-        //console.log("24");
-        //console.log(currentID._id);
+
         for (let i = 0; i < result.length; i++) {
           let dbID = { _id: ObjectID(result[i]._id) };
-          //console.log("Comparing " + currentID._id + " with " + dbID._id);
+
           if (currentID._id.equals(dbID._id)) {
-            //console.log("Name is " + req.user.name
             result = result[i];
-            //console.log("Result is");
-            //console.log(result);
           }
         }
 
+        let name = req.user.name;
+        firstChar = name.charAt(0);
+        name = firstChar.toUpperCase() + name.substring(1, name.length);
         res.render("dashboard", {
-          name: req.user.name,
+          name: name,
           email: req.user.email,
           id: req.user._id,
           result: result
