@@ -31,10 +31,12 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
         }
 
         let name = req.user.name;
+        let fullname;
         firstChar = name.charAt(0);
-        name = firstChar.toUpperCase() + name.substring(1, name.length);
+        fullname = firstChar.toUpperCase() + name.substring(1, name.length);
         res.render("dashboard", {
           name: name,
+          fullname: fullname,
           email: req.user.email,
           id: req.user._id,
           result: result
