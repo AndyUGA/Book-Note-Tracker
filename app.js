@@ -15,13 +15,10 @@ require("./config/passport")(passport);
 const db = require("./config/keys").MongoURI;
 
 //Connect to mongoose
-mongoose
-  .connect(
-    db,
-    { useNewUrlParser: true }
-  )
-  .then(() => console.log("MongoDB Connected..."))
-  .catch(err => console.log());
+mongoose.connect(
+  db,
+  { useNewUrlParser: true }
+);
 
 //EJS layouts
 app.use(expressLayouts);

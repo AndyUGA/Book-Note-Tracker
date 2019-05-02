@@ -1,6 +1,7 @@
 
 
-     <h2 class = "text-center"> Current Notes </h2>
+     <h2 class = "text-center"> Current Notes | <%= bookTitle %> </h2>
+
      <form action = "/insertNote/<%=index%>/<%=name%>/<%=bookTitle%>" class="form-horizontal " method="post">
        <div class="form-group">
          <input type="text" class="form-control" name="note" placeholder="Enter Note ">
@@ -14,9 +15,18 @@
        <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
 
           <%= result.BookTitle[index].Note[j] %>
-        
+
+          <form action = "/updateNote/<%=j%>/<%=name%>/<%=bookTitle%>/<%=index%>" class="form-horizontal " method="post">
+            <div class="form-group">
+              <input type="text" class="form-control" name="note" placeholder="Enter Note ">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
+          </form>
          </div>
          </div>
+
+
 
      <br>
      <% } %>

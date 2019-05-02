@@ -106,4 +106,20 @@ router.post("/insertNote/:index/:name/:bookTitle", (req, res, next) => {
   });
 });
 
+router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", (req, res, next) => {
+  const name = req.params.name;
+  const bookIndex = req.params.bookIndex;
+  const noteIndex = req.params.noteIndex;
+  const title = req.body.title;
+  const bookTitle = req.params.bookTitle;
+  const note = req.body.note;
+
+  client.connect(err => {
+    const collection = client.db("test").collection("users");
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $set: { ["BookTitle.$.Note." + noteIndex]: note } });
+
+    res.redirect("/getBookNotes/" + bookIndex + "/" + name);
+  });
+});
+
 module.exports = router;
