@@ -48,3 +48,8 @@ button {
   font-size: 25px;
   font-weight: 600;
 }
+
+.trash-right {
+  display: inline-block;
+  float: right;
+}
