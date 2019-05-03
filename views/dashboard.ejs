@@ -17,7 +17,13 @@
   <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
     <a href= "/getBookNotes/<%=i%>/<%=name%>">
   <%= result.BookTitle[i].Title%>
-    </a>
+  </a>
+
+  <form action = "/deleteNote/<%= result.BookTitle[i].Title%>/<%=name%>" class="form-horizontal " method="post">
+    <button type="submit"><i class="fas fa-trash-alt fa-lg"></i></button>
+
+  </form>
+
     </div>
     </div>
 

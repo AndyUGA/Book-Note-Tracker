@@ -124,4 +124,16 @@ router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", (req, res, nex
   });
 });
 
+router.post("/deleteNote/:bookTitle/:name", (req, res, next) => {
+  const name = req.params.name;
+  const bookTitle = req.params.bookTitle;
+
+  client.connect(err => {
+    const collection = client.db("test").collection("users");
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $pull: { BookTitle: { Title: bookTitle } } });
+
+    res.redirect("/dashboard");
+  });
+});
+
 module.exports = router;
