@@ -9,7 +9,7 @@ const { ensureAuthenticated } = require("../config/auth");
 var result;
 
 //Welcome
-router.get("/", (req, res) => res.render("welcome"));
+router.get("/", (req, res) => res.render("Homepage", { layout: "Homepage" }));
 
 //Dashboard
 router.get("/dashboard", ensureAuthenticated, (req, res) => {

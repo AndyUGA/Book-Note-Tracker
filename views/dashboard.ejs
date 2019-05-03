@@ -1,90 +1,65 @@
-
-
-
-
 <h1 class="mt-4 text-left">Welcome <%= fullname %>! </h1>
-
-
 <br>
-
-
-
-
-
 <br>
 <% for(var i=0; i < result.BookTitle.length; i++) { %>
-  <div class = "text-center">
-  <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
-    <a href= "/getBookNotes/<%=i%>/<%=name%>">
-  <%= result.BookTitle[i].Title%>
-  </a>
-    </div>
-    <div class="card-footer text-muted">
-
-      <div class = "text-center">
-        <a href = "/" data-toggle="modal" data-target="#deleteModal<%=i%>">
-       <i class="fas fa-trash-alt fa-lg" title="Delete Book Entry"></i>
+<div class = "text-center">
+   <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
+      <a href= "/getBookNotes/<%=i%>/<%=name%>">
+      <%= result.BookTitle[i].Title%>
       </a>
+   </div>
+   <div class="card-footer text-muted">
+      <div class = "text-center">
+         <a href = "/" data-toggle="modal" data-target="#deleteModal<%=i%>">
+         <i class="fas fa-trash-alt fa-lg" title="Delete Book Entry"></i>
+         </a>
       </div>
- </div>
-    </div>
-
-
+   </div>
+</div>
 <br>
-
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> Confirm Deletition of <i> <%= result.BookTitle[i].Title%> </i> </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Confirm Deletition : <i> <%= result.BookTitle[i].Title%> </i> </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form action = "/deleteNote/<%= result.BookTitle[i].Title%>/<%=name%>" class="form-horizontal text-center " method="post">
+               <button type="submit"><i id = "trash" class="fas fa-trash-alt fa-2x"></i></button>
+            </form>
+         </div>
       </div>
-      <div class="modal-body">
-        <form action = "/deleteNote/<%= result.BookTitle[i].Title%>/<%=name%>" class="form-horizontal text-center " method="post">
-          <button type="submit"><i class="fas fa-trash-alt fa-lg"></i></button>
-        </form>
-      </div>
-
-    </div>
-  </div>
+   </div>
 </div>
 <% } %>
-
 <div class = "text-center">
-  <a href = "/" data-toggle="modal" data-target="#exampleModal">
- <i class="fas fa-pencil-alt fa-2x" title="Create Book Entry"></i>
-</a>
+   <a href = "/" data-toggle="modal" data-target="#exampleModal">
+   <i class="fas fa-pencil-alt fa-2x" title="Create Book Entry"></i>
+   </a>
 </div>
-
 <br>
-
-
-
 <!-- Create Book Entry Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"> Create Book Entry </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+   <div class="modal-dialog" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Create Book Entry </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <form action = "/createBookEntry/<%=name%>" class="form-horizontal" method="post">
+               <div class="form-group">
+                  <input type="text" class="form-control" name="title" placeholder="Enter Book Title">
+               </div>
+               <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+         </div>
       </div>
-      <div class="modal-body">
-        <form action = "/createBookEntry/<%=name%>" class="form-horizontal" method="post">
-          <div class="form-group">
-
-            <input type="text" class="form-control" name="title" placeholder="Enter Book Title">
-
-          </div>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-
-    </div>
-  </div>
+   </div>
 </div>

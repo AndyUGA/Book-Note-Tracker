@@ -13,3 +13,38 @@ button {
   background-color: #f8f9fa;
   border: none;
 }
+
+.testbg {
+  background-image: url("Images/mountain.jpg");
+  height: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#outer {
+  width: 100%;
+  height: 80vh;
+  display: flex;
+}
+
+#inner {
+  margin: auto;
+}
+
+.title {
+  color: #695e88;
+  font-weight: bold !important;
+  font-size: 35;
+}
+
+.subtitle {
+  color: #695e88;
+  font-size: 25;
+}
+
+.start {
+  color: #695e88;
+  font-size: 25px;
+  font-weight: 600;
+}
