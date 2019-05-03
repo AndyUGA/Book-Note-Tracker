@@ -10,23 +10,41 @@
 
      </form>
         <br>
+
+
+
       <% for(var j=0; j < result.BookTitle[index].Note.length; j++) { %>
-       <div class = "text-center">
+
        <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
 
           <%= result.BookTitle[index].Note[j] %>
-
-          <form action = "/updateNote/<%=j%>/<%=name%>/<%=bookTitle%>/<%=index%>" class="form-horizontal " method="post">
-            <div class="form-group">
-              <input type="text" class="form-control" name="note" placeholder="Enter Note ">
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-
-          </form>
-         </div>
+          <br>
+            <i class="fas fa-edit" data-toggle="modal" data-target="#exampleModal<%=j%>"></i>
          </div>
 
 
+         <!-- Modal -->
+         <div class="modal fade" id="exampleModal<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+           <div class="modal-dialog" role="document">
+             <div class="modal-content">
+               <div class="modal-header">
+                 <h5 class="modal-title" id="exampleModalLabel">Update Note</h5>
+                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+                 </button>
+               </div>
+               <div class="modal-body">
+                 <form action = "/updateNote/<%=j%>/<%=name%>/<%=bookTitle%>/<%=index%>" class="form-horizontal " method="post">
+                   <div class="form-group">
+                     <input type="text" value = "<%= result.BookTitle[index].Note[j] %>" class="form-control" name="note" placeholder="New Note ">
+                   </div>
+                   <button type="submit" class="btn btn-primary">Submit</button>
+
+                 </form>
+               </div>
+             </div>
+           </div>
+         </div>
 
      <br>
      <% } %>

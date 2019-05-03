@@ -62,8 +62,6 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
           if (currentID._id.equals(dbID._id)) {
             result = result[i];
             bookTitle = result.BookTitle[index].Title;
-            //console.log("Result is");
-            //console.log(result);
           }
         }
 
@@ -76,6 +74,10 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
       }
     });
   });
+});
+
+router.get("/UpdateNoteForm", ensureAuthenticated, (req, res) => {
+  res.render("Forms/UpdateNote");
 });
 
 router.post("/createBookEntry/:name", (req, res, next) => {
