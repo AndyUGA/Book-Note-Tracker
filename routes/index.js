@@ -8,10 +8,10 @@ const { ensureAuthenticated } = require("../config/auth");
 
 var result;
 
-//Welcome
-router.get("/", (req, res) => res.render("Homepage", { layout: "Homepage" }));
+//Get Welcome page
+router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
 
-//Dashboard
+//Get dashboard page of user
 router.get("/dashboard", ensureAuthenticated, (req, res) => {
   client.connect(err => {
     const collection = client.db("test").collection("users");
@@ -34,7 +34,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
         let fullname;
         firstChar = name.charAt(0);
         fullname = firstChar.toUpperCase() + name.substring(1, name.length);
-        res.render("dashboard", {
+        res.render("User/dashboard", {
           name: name,
           fullname: fullname,
           email: req.user.email,
@@ -46,6 +46,7 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
+//Get notes from selected book title
 router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
   const index = req.params.index;
   const name = req.params.name;
@@ -65,7 +66,7 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
           }
         }
 
-        res.render("BookNotes", {
+        res.render("User/BookNotes", {
           result: result,
           index: index,
           name: name,
@@ -76,15 +77,12 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
   });
 });
 
-router.get("/UpdateNoteForm", ensureAuthenticated, (req, res) => {
-  res.render("Forms/UpdateNote");
-});
-
-router.post("/createBookEntry/:name", (req, res, next) => {
+//Request to create book entry
+router.post("/createBookEntry/:name", ensureAuthenticated, (req, res, next) => {
   const name = req.params.name;
 
   const title = req.body.title;
-  let tempData = { Title2: title };
+
   client.connect(err => {
     const collection = client.db("test").collection("users");
     collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: [] } } });
@@ -93,7 +91,8 @@ router.post("/createBookEntry/:name", (req, res, next) => {
   });
 });
 
-router.post("/insertNote/:index/:name/:bookTitle", (req, res, next) => {
+//Requst to create note
+router.post("/insertNote/:index/:name/:bookTitle", ensureAuthenticated, (req, res, next) => {
   const name = req.params.name;
   const index = req.params.index;
   const title = req.body.title;
@@ -108,7 +107,8 @@ router.post("/insertNote/:index/:name/:bookTitle", (req, res, next) => {
   });
 });
 
-router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", (req, res, next) => {
+//Request to update note
+router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", ensureAuthenticated, (req, res, next) => {
   const name = req.params.name;
   const bookIndex = req.params.bookIndex;
   const noteIndex = req.params.noteIndex;
@@ -124,7 +124,8 @@ router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", (req, res, nex
   });
 });
 
-router.post("/deleteNote/:bookTitle/:name", (req, res, next) => {
+//Request to delete book entry
+router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next) => {
   const name = req.params.name;
   const bookTitle = req.params.bookTitle;
 

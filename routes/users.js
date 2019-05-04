@@ -13,10 +13,10 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 const User = require("../models/User");
 
 //Login page
-router.get("/login", (req, res) => res.render("login"));
+router.get("/login", (req, res) => res.render("Account/login"));
 
 //Register page
-router.get("/register", (req, res) => res.render("register"));
+router.get("/register", (req, res) => res.render("Account/register"));
 
 //Register Post Request
 router.post("/register", (req, res) => {
