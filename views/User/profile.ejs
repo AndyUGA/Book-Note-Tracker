@@ -33,11 +33,13 @@
                        <div class="card-body text-center">
                           <h4 class="card-text"> Name: <%= fullname %> </h4>
                           <h4 class="card-text"> Email: <%= email %> </h4>
-                          <h4 class="card-text"> Books:</h4>
-                          <% for(var i=0; i < result.BookTitle.length; i++) { %>
-                          <%= result.BookTitle[i].Title%>
-                          <br>
-                          <% } %>
+                          <h4 class="card-text"> Books:  <br> <% for(var i=0; i < result.BookTitle.length; i++) { %>
+                            <a href="/getBookNotes/<%=i%>/<%=name%>">
+                            <%= result.BookTitle[i].Title%>
+                            </a>
+                            <br>
+                            <% } %></h4>
+
                        </div>
 
 
