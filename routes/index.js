@@ -46,6 +46,42 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
   });
 });
 
+//Get dashboard page of user
+router.get("/profile", ensureAuthenticated, (req, res) => {
+  client.connect(err => {
+    const collection = client.db("test").collection("users");
+
+    collection.find({}).toArray(function(err, result) {
+      if (err) {
+        res.send({ error: " An error has occurred" });
+      } else {
+        const currentID = { _id: ObjectID(req.user._id) };
+
+        for (let i = 0; i < result.length; i++) {
+          let dbID = { _id: ObjectID(result[i]._id) };
+
+          if (currentID._id.equals(dbID._id)) {
+            result = result[i];
+          }
+        }
+
+        let name = req.user.name;
+        let fullname;
+        firstChar = name.charAt(0);
+        fullname = firstChar.toUpperCase() + name.substring(1, name.length);
+        res.render("User/profile", {
+          layout: "User/profile",
+          name: name,
+          fullname: fullname,
+          email: req.user.email,
+          id: req.user._id,
+          result: result
+        });
+      }
+    });
+  });
+});
+
 //Get notes from selected book title
 router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
   const index = req.params.index;

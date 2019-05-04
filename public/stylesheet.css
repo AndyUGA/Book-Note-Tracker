@@ -53,3 +53,16 @@ button {
   display: inline-block;
   float: right;
 }
+
+.profile {
+  margin-top: 5%;
+  width: 90%;
+}
+
+.rounded {
+  border-radius: 3rem !important;
+}
+
+.card-img-top {
+  width: 20%;
+}
