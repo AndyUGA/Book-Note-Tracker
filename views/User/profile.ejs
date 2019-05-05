@@ -23,8 +23,36 @@
             <a href="/users/logout" class="btn btn-secondary">Logout</a>
          </div>
       </nav>
-      <div class="d-flex justify-content-around align-items-center">
-         <div class="container2 h-90 card shadow-lg p-3 mb-5 bg-white rounded profile float-left">
+
+      <div class="container">
+  <div class="row">
+    <div class="col-md">
+      <div class="row h-90 align-items-center card rounded shadow-lg">
+         <div class="card-body text-center">
+            <img class="card-img-top " src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png" alt="Card image cap">
+            <h4 class="card-text"> Name: <%= fullname %> </h4>
+            <h4 class="card-text"> Email: <%= email %> </h4>
+         </div>
+      </div>
+    </div>
+    <div class="col-md">
+      <div class="row h-90  justify-content-center align-items-center ">
+         <div class="card-body text-center">
+            <h4 class="card-text"> Books:  <br> <% for(var i=0; i < result.BookTitle.length; i++) { %>
+               <a href="/getBookNotes/<%=i%>/<%=name%>">
+               <%= result.BookTitle[i].Title%>
+               </a>
+               <br>
+               <% } %>
+            </h4>
+         </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+      <div class="d-flex p-3 mb-5 justify-content-around align-items-center col-xl-12 col-md-6 col-sm-12 order-last order-sm-first">
+         <div class="container2 h-100 w-40 card shadow-lg p-3 mb-5 bg-white rounded profile float-left">
             <div class="row h-90 align-items-center ">
                <div class="card-body text-center">
                   <img class="card-img-top " src="https://cdn2.iconfinder.com/data/icons/business-management-52/96/Artboard_20-512.png" alt="Card image cap">
@@ -33,7 +61,7 @@
                </div>
             </div>
          </div>
-         <div class="container2 h-90 card shadow-lg p-3 mb-5 bg-white rounded profile float-left">
+         <div class="container2 h-100 w-40 card shadow-lg p-3 mb-5 bg-white rounded profile float-left">
             <div class="row h-90  justify-content-center align-items-center ">
                <div class="card-body text-center">
                   <h4 class="card-text"> Books:  <br> <% for(var i=0; i < result.BookTitle.length; i++) { %>
