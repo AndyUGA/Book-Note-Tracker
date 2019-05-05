@@ -39,7 +39,8 @@ router.get("/dashboard", ensureAuthenticated, (req, res) => {
           fullname: fullname,
           email: req.user.email,
           id: req.user._id,
-          result: result
+          result: result,
+          title: "Dashboard"
         });
       }
     });
@@ -75,7 +76,8 @@ router.get("/profile", ensureAuthenticated, (req, res) => {
           fullname: fullname,
           email: req.user.email,
           id: req.user._id,
-          result: result
+          result: result,
+          title: "Profile"
         });
       }
     });
@@ -106,7 +108,8 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
           result: result,
           index: index,
           name: name,
-          bookTitle: bookTitle
+          bookTitle: bookTitle,
+          title: "Notes"
         });
       }
     });
