@@ -13,14 +13,16 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 const User = require("../models/User");
 
 //Login page
-router.get("/login", (req, res) =>
-  res.render("Account/login", { layout: "userLayout", title: "Login" })
-);
+router.get("/login", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect("/dashboard");
+  } else {
+    res.render("Account/login", { layout: "userLayout", title: "Login" });
+  }
+});
 
 //Register page
-router.get("/register", (req, res) =>
-  res.render("Account/register", { layout: "userLayout", title: "Register" })
-);
+router.get("/register", (req, res) => res.render("Account/register", { layout: "userLayout", title: "Register" }));
 
 //Register Post Request
 router.post("/register", (req, res) => {
@@ -79,10 +81,7 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then(user => {
-                req.flash(
-                  "success_msg",
-                  "You are now registered and can log in"
-                );
+                req.flash("success_msg", "You are now registered and can log in");
                 res.redirect("/users/login");
               })
               .catch(err => console.log(err));

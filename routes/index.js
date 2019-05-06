@@ -9,9 +9,7 @@ const { ensureAuthenticated } = require("../config/auth");
 var result;
 
 //Get Welcome page
-router.get("/", (req, res) =>
-  res.render("User/Homepage", { layout: "User/Homepage" })
-);
+router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
 
 router.get("/:content", ensureAuthenticated, (req, res) => {
   const content = req.params.content;
@@ -103,80 +101,56 @@ router.post("/createBookEntry/:name", ensureAuthenticated, (req, res, next) => {
 
   client.connect(err => {
     const collection = client.db("test").collection("users");
-    collection.updateOne(
-      { name: name },
-      { $push: { BookTitle: { Title: title, Note: [] } } }
-    );
+    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: [] } } });
 
     res.redirect("/dashboard");
   });
 });
 
 //Requst to create note
-router.post(
-  "/insertNote/:index/:name/:bookTitle",
-  ensureAuthenticated,
-  (req, res, next) => {
-    const name = req.params.name;
-    const index = req.params.index;
-    const title = req.body.title;
-    const bookTitle = req.params.bookTitle;
-    const note = req.body.note;
+router.post("/insertNote/:index/:name/:bookTitle", ensureAuthenticated, (req, res, next) => {
+  const name = req.params.name;
+  const index = req.params.index;
+  const title = req.body.title;
+  const bookTitle = req.params.bookTitle;
+  const note = req.body.note;
 
-    client.connect(err => {
-      const collection = client.db("test").collection("users");
-      collection.updateOne(
-        { name: name, "BookTitle.Title": bookTitle },
-        { $push: { "BookTitle.$.Note": note } }
-      );
+  client.connect(err => {
+    const collection = client.db("test").collection("users");
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": note } });
 
-      res.redirect("/getBookNotes/" + index + "/" + name);
-    });
-  }
-);
+    res.redirect("/getBookNotes/" + index + "/" + name);
+  });
+});
 
 //Request to update note
-router.post(
-  "/updateNote/:noteIndex/:name/:bookTitle/:bookIndex",
-  ensureAuthenticated,
-  (req, res, next) => {
-    const name = req.params.name;
-    const bookIndex = req.params.bookIndex;
-    const noteIndex = req.params.noteIndex;
-    const title = req.body.title;
-    const bookTitle = req.params.bookTitle;
-    const note = req.body.note;
+router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", ensureAuthenticated, (req, res, next) => {
+  const name = req.params.name;
+  const bookIndex = req.params.bookIndex;
+  const noteIndex = req.params.noteIndex;
+  const title = req.body.title;
+  const bookTitle = req.params.bookTitle;
+  const note = req.body.note;
 
-    client.connect(err => {
-      const collection = client.db("test").collection("users");
-      collection.updateOne(
-        { name: name, "BookTitle.Title": bookTitle },
-        { $set: { ["BookTitle.$.Note." + noteIndex]: note } }
-      );
+  client.connect(err => {
+    const collection = client.db("test").collection("users");
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $set: { ["BookTitle.$.Note." + noteIndex]: note } });
 
-      res.redirect("/getBookNotes/" + bookIndex + "/" + name);
-    });
-  }
-);
+    res.redirect("/getBookNotes/" + bookIndex + "/" + name);
+  });
+});
 
 //Request to delete book entry
-router.post(
-  "/deleteNote/:bookTitle/:name",
-  ensureAuthenticated,
-  (req, res, next) => {
-    const name = req.params.name;
-    const bookTitle = req.params.bookTitle;
+router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next) => {
+  const name = req.params.name;
+  const bookTitle = req.params.bookTitle;
 
-    client.connect(err => {
-      const collection = client.db("test").collection("users");
-      collection.updateOne(
-        { name: name, "BookTitle.Title": bookTitle },
-        { $pull: { BookTitle: { Title: bookTitle } } }
-      );
+  client.connect(err => {
+    const collection = client.db("test").collection("users");
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $pull: { BookTitle: { Title: bookTitle } } });
 
-      res.redirect("/dashboard");
-    });
-  }
-);
+    res.redirect("/dashboard");
+  });
+});
 
 module.exports = router;
