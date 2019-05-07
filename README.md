@@ -27,4 +27,4 @@ A web application that allows users to create book entries and add notes with ea
 - JavaScript
 
 ---------------------------------------------------------------------------------------------------------------------------
-[Live Preview](https://boiled-mare.glitch.me)
+[Live Preview](https://notetracker.andytruong.dev)
