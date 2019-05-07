@@ -1,23 +1,31 @@
 <h1 class="mt-4 text-left">Welcome <%= fullname %>! </h1>
 <br>
 <br>
-<% for(var i=0; i < result.BookTitle.length; i++) { %>
-<div class = "text-center">
-   <div class= " card p-3 bg-light rounded">
+<% for(var i=0; i < result.BookTitle.length / 3; i++) { %>
 
-     <div>
-      <a href= "/getBookNotes/<%=i%>/<%=name%>">
-      <%= result.BookTitle[i].Title%>
-      </a>
-      <div class = "trash-right">
-      <a href = "/" data-toggle="modal" data-target="#deleteModal<%=i%>">
-      <i class="fas fa-trash-alt fa-lg" title="Delete Book Entry"></i>
-      </a>
-      </div>
-      </div>
+  <div class="container">
+  <div class="row">
+  <% for(var j=0; j < 3; j++) { %>
+  <div class="col-md d-flex justify-content-center">
+  <div class="row h-90 align-items-center card2 rounded shadow">
+    <div class="card-body">
+      <h5 class="card-title">  <a href= "/getBookNotes/<%=i%>/<%=name%>">
+        <%= result.BookTitle[j +(i *3)].Title%>
+        </a> </h5>
+      <h6 class="card-subtitle mb-2 text-muted">Greg McKeown</h6>
+      <br>
+      <form action = "/deleteNote/>/<%=name%>" class="form-horizontal text-center " method="post">
+         <button type="submit"><i id = "trash" class="fas fa-trash-alt fa-2x"></i></button>
+      </form>
+    </div>
+  </div>
+  </div>
+ <% } %>
 
-   </div>
-</div>
+  </div>
+  </div>
+
+
 <br>
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal<%=i%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -37,13 +45,32 @@
       </div>
    </div>
 </div>
+
+
+
 <% } %>
+
+
+
+
 <div class = "text-center">
    <a href = "/" data-toggle="modal" data-target="#exampleModal">
    <i class="fas fa-pencil-alt fa-2x" title="Create Book Entry"></i>
    </a>
 </div>
 <br>
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- Create Book Entry Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">

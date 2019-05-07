@@ -5,6 +5,13 @@ html {
   position: relative;
 }
 
+.card2 {
+  width: 100%;
+}
+
+.containter {
+  background-image: linear-gradient(to right, red, yellow);
+}
 .fa-pencil-alt {
   color: #007bfe;
 }
@@ -49,6 +56,12 @@ button {
   font-weight: 600;
 }
 
+.cardTitle {
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+}
+
 .trash-right {
   display: inline-block;
   float: right;
@@ -60,7 +73,7 @@ button {
 }
 
 .rounded {
-  border-radius: 3rem !important;
+  border-radius: 2rem !important;
 }
 
 .card-img-top {
@@ -69,4 +82,10 @@ button {
 
 .container2 {
   width: 40%;
+}
+
+@media only screen and (max-width: 600px) {
+  .card2 {
+    width: 100%;
+  }
 }
