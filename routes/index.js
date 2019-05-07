@@ -98,10 +98,11 @@ router.post("/createBookEntry/:name", ensureAuthenticated, (req, res, next) => {
   const name = req.params.name;
 
   const title = req.body.title;
+  const author = req.body.author;
 
   client.connect(err => {
     const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Note: [] } } });
+    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Author: author, Note: [] } } });
 
     res.redirect("/dashboard");
   });

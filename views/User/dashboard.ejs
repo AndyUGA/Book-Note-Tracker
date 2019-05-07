@@ -2,18 +2,22 @@
 <br>
 <br>
 
-<% for(var i=0; i < result.BookTitle.length / 3; i++) { %>
+<% for(var i=0; i < Math.ceil(result.BookTitle.length / 3); i++) { %>
 
   <div class="container text-center">
   <div class="row">
   <% for(var j=0; j < 3; j++) { %>
+    <% if(result.BookTitle.length  > (j +(i *3))) { %>
   <div class="col-md d-flex justify-content-center">
   <div class="row h-90 align-items-center card2 rounded shadow">
     <div class="card-body">
-      <h5 class="card-title">  <a href= "/getBookNotes/<%=i%>/<%=name%>">
-        <%= result.BookTitle[j +(i *3)].Title%>
-        </a> </h5>
-      <h6 class="card-subtitle mb-2 text-muted">Greg McKeown</h6>
+      <h5 class="card-title">
+
+        <a href= "/getBookNotes/<%=i%>/<%=name%>">
+          <%= result.BookTitle[j +(i *3)].Title%>
+          </a> </h5>
+
+      <h6 class="card-subtitle mb-2 text-muted"><%= result.BookTitle[j +(i *3)].Author%></h6>
       <br>
       <a href = "/" data-toggle="modal" data-target="#deleteModal<%=j+(i * 3)%>">
       <i class="fas fa-trash-alt fa-lg" title="Delete Book Entry"></i>
@@ -23,11 +27,14 @@
   </div>
   </div>
 
+
+<% if(result.BookTitle.length > j +(i *3)) { %>
   <!-- Delete Modal -->
   <div class="modal fade" id="deleteModal<%=j+(i * 3)%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
      <div class="modal-dialog" role="document">
         <div class="modal-content">
            <div class="modal-header">
+
               <h5 class="modal-title" id="exampleModalLabel"> Confirm Deletition : <i> <%= result.BookTitle[j+(i * 3)].Title%> </i> </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -41,6 +48,8 @@
         </div>
      </div>
   </div>
+  <% } %>
+  <% } %>
  <% } %>
 
   </div>
@@ -67,14 +76,6 @@
 
 
 
-
-
-
-
-
-
-
-
 <!-- Create Book Entry Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
@@ -88,7 +89,10 @@
          <div class="modal-body">
             <form action = "/createBookEntry/<%=name%>" class="form-horizontal" method="post">
                <div class="form-group">
-                  <input type="text" class="form-control" name="title" placeholder="Enter Book Title">
+                  <input type="text" class="form-control" name="title" placeholder="Book Title">
+               </div>
+               <div class="form-group">
+                  <input type="text" class="form-control" name="author" placeholder="Author">
                </div>
                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
