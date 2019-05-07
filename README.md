@@ -5,9 +5,11 @@ A website that allows you to keep organized notes about the current book that yo
 
 <p align = "middle"> Landing Page </p>
 
-![alt-text-1](https://github.com/AndyUGA/UserRegistration/blob/master/Screenshots/Landing.png) <p align = "middle"> Book List </p> ![alt-text-2](https://github.com/AndyUGA/Book-Note-Tracker/blob/master/Screenshots/Book%20List.png)
+![alt-text-1](https://github.com/AndyUGA/Book-Note-Tracker/blob/master/Screenshots/Landing.png) <p align = "middle"> Login </p> ![alt-text-2](https://github.com/AndyUGA/Book-Note-Tracker/blob/master/Screenshots/Login.png)<p align = "middle"> Book List </p>
 
-<p align = "middle"> Book List </p> ![alt-text-2](https://github.com/AndyUGA/Book-Note-Tracker/blob/master/Screenshots/Login.png)
+![alt-text-1](https://github.com/AndyUGA/Book-Note-Tracker/blob/master/Screenshots/Book%20List.png)
+
+
 
 
 A web application that allows users to create book entries and add notes with each book entry
