@@ -17,13 +17,20 @@
 
         <a href= "/getBookNotes/<%=j + (i*3)%>/<%=name%>">
           <%= result.BookTitle[j +(i *3)].Title%>
-          </a> </h5>
+          </a>
+       </h5>
 
       <h6 class="card-subtitle mb-2 text-muted"><%= result.BookTitle[j +(i *3)].Author%></h6>
       <br>
+
+      <div class="d-flex justify-content-around">
+      <%= result.BookTitle[j +(i *3)].Note.length%> Notes
+
       <a href = "/" data-toggle="modal" data-target="#deleteModal<%=j+(i * 3)%>">
       <i class="fas fa-trash-alt fa-lg" title="Delete Book Entry"></i>
       </a>
+      </div>
+
 
     </div>
   </div>

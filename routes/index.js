@@ -11,6 +11,7 @@ var result;
 //Get Welcome page
 router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
 
+//Returns view for dashboard or profile
 router.get("/:content", ensureAuthenticated, (req, res) => {
   const content = req.params.content;
 
