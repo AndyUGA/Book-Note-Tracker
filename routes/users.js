@@ -44,12 +44,13 @@ router.post("/register", (req, res) => {
   }
 
   if (errors.length > 0) {
-    res.render("register", {
+    res.render("Account/register", {
       errors,
       name,
       email,
       password,
-      password2
+      password2,
+      title: "Register"
     });
   } else {
     User.findOne({ email: email }).then(user => {
