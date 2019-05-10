@@ -1,0 +1,12 @@
+<% for(var i=0; i < allResults.length; i++) { %>
+
+<% for(var j=0; j < allResults[i].BookTitle.length; j++) { %>
+
+
+    <a href= "/getBookNotes/<%=j + (i*3)%>/<%= allResults[i].name%>">
+<%= allResults[i].BookTitle[j].Title %>
+    </a>
+<br>
+
+<% } %>
+<% } %>

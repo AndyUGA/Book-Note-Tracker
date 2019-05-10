@@ -19,6 +19,7 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
     const collection = client.db("test").collection("users");
 
     collection.find({}).toArray(function(err, result) {
+      let allResults = result;
       if (err) {
         res.send({ error: " An error has occurred" });
       } else {
@@ -56,6 +57,9 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
             result: result,
             title: "Profile"
           });
+        } else if (content == "public") {
+          console.log(allResults);
+          res.render("User/Public", { title: "Public", allResults: allResults });
         }
       }
     });
