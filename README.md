@@ -1,7 +1,7 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
 # Book Note Tracker
-A website that allows you to keep organized notes about the current book that you're reading 
+A website that allows a user to keep organized notes about the current book that you're reading 
 
 <p align = "middle"> Landing Page </p>
 
