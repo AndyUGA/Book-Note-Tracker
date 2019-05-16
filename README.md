@@ -12,7 +12,7 @@ A website that allows a user to keep organized notes about the current book that
 
 
 
-A web application that allows users to create book entries and add notes with each book entry
+A web application that allows users to create book entries and add notes. 
 
 ------------------------------------------------------------------------------------------------------------------------------  
 
