@@ -22,6 +22,7 @@ A web application that allows users to create book entries and record notes.
 - [MongoDB](https://www.mongodb.com) 
 - [Passport.js](http://www.passportjs.org)
 - [EJS](https://ejs.co)
+- [Passport.JS](http://www.passportjs.org)
 - HTML
 - CSS
 - JavaScript
