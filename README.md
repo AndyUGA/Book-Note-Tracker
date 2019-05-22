@@ -1,7 +1,7 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
 # Book Note Tracker
-A website that allows a user to keep organized notes about the current book that they are reading 
+A web application that allows users to record notes about the book they are reading.   
 
 <p align = "middle"> Landing Page </p>
 
@@ -12,7 +12,7 @@ A website that allows a user to keep organized notes about the current book that
 
 
 
-A web application that allows users to record notes about the book they are reading.  
+
 
 ------------------------------------------------------------------------------------------------------------------------------  
 
