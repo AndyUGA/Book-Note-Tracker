@@ -1,7 +1,7 @@
 [![996.icu](https://img.shields.io/badge/link-996.icu-red.svg)](https://996.icu)
 
 # Book Note Tracker
-My personal web application that allows users to record and view notes about books they are reading.   
+My personal web application that allow users to record and view notes about books they are reading.   
 
 <p align = "middle"> Landing Page </p>
 
