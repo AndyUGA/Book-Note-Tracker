@@ -22,9 +22,9 @@ My personal web application that allow users to record and view notes about book
 - [MongoDB](https://www.mongodb.com) 
 - [Passport.js](http://www.passportjs.org)
 - [EJS](https://ejs.co)
-- [Passport.JS](http://www.passportjs.org)
-- HTML
-- CSS
+- [Passport.js](http://www.passportjs.org)
+- HTML5
+- CSS3
 - JavaScript
 
 ---------------------------------------------------------------------------------------------------------------------------
