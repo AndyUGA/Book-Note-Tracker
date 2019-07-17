@@ -3,7 +3,7 @@
 # Book Note Tracker
 My personal web application that allow users to record and view notes about books they are reading.   
 
-<p align = "middle"> Landing Page </p>
+<p align = "middle"> Home Page </p>
 
 ![alt-text-1](https://github.com/AndyUGA/Book-Note-Tracker/blob/master/Screenshots/Landing.png) <p align = "middle"> Login </p> ![alt-text-2](https://github.com/AndyUGA/Book-Note-Tracker/blob/master/Screenshots/Login.png)<p align = "middle"> Book List </p>
 
