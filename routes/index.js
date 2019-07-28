@@ -73,6 +73,7 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
   client.connect(err => {
     const collection = client.db("test").collection("users");
     let bookTitle;
+    let author;
     collection.find({}).toArray(function(err, result) {
       if (err) {
         res.send({ error: " An error has occurred" });
@@ -83,6 +84,7 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
           if (currentID._id.equals(dbID._id)) {
             result = result[i];
             bookTitle = result.BookTitle[index].Title;
+            author = result.BookTitle[index].Author;
           }
         }
 
@@ -91,7 +93,8 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
           index: index,
           name: name,
           bookTitle: bookTitle,
-          title: "Notes"
+          title: "Notes",
+          author: author
         });
       }
     });

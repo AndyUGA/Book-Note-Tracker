@@ -1,4 +1,7 @@
+<br>
 <h2 class = "text-center"> <%= bookTitle %> </h2>
+<h4 class = "text-center"> By: <%= author %> </h4>
+<br>
 <form action = "/insertNote/<%=index%>/<%=name%>/<%=bookTitle%>" class="form-horizontal " method="post">
    <div class="form-group">
       <input type="text" class="form-control" name="note" placeholder="Enter Note ">
@@ -12,8 +15,13 @@
    <br>
    <a href = "/" data-toggle="modal" data-target="#exampleModal<%=j%>">
    <i class="fas fa-edit"></i>
+
    </a>
+
+
 </div>
+
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal<%=j%>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
    <div class="modal-dialog" role="document">
