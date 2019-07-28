@@ -122,8 +122,7 @@ router.post("/insertNote/:index/:name/:bookTitle", ensureAuthenticated, (req, re
   const index = req.params.index;
   const title = req.body.title;
   const bookTitle = req.params.bookTitle;
-  const note = req.body.note;
-
+  const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
   client.connect(err => {
     const collection = client.db("test").collection("users");
     collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": note } });
@@ -139,7 +138,7 @@ router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", ensureAuthenti
   const noteIndex = req.params.noteIndex;
   const title = req.body.title;
   const bookTitle = req.params.bookTitle;
-  const note = req.body.note;
+  const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
 
   client.connect(err => {
     const collection = client.db("test").collection("users");

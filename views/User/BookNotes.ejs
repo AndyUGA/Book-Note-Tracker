@@ -11,7 +11,18 @@
 <br>
 <% for(var j=0; j < result.BookTitle[index].Note.length; j++) { %>
 <div class= " card p-3 bg-light rounded justify-content-center align-items-center">
-   <%= result.BookTitle[index].Note[j] %>
+
+    <%if (result.BookTitle[index].Note[j].content == null) {%>
+      <%= result.BookTitle[index].Note[j]%>
+    <% }
+    else { %>
+      <%= result.BookTitle[index].Note[j].content %>
+      <br>
+      <div class = "text-center">
+       <%= result.BookTitle[index].Note[j].created %>
+     </div>
+  <%  } %>
+
    <br>
    <a href = "/" data-toggle="modal" data-target="#exampleModal<%=j%>">
    <i class="fas fa-edit"></i>
@@ -35,7 +46,7 @@
          <div class="modal-body">
             <form action = "/updateNote/<%=j%>/<%=name%>/<%=bookTitle%>/<%=index%>" class="form-horizontal " method="post">
                <div class="form-group">
-                  <input type="text" value = "<%= result.BookTitle[index].Note[j] %>" class="form-control" name="note" placeholder="New Note ">
+                  <input type="text" value = "<%= result.BookTitle[index].Note[j].content %>" class="form-control" name="note" placeholder="New Note ">
                </div>
                <button type="submit" class="btn btn-primary">Submit</button>
             </form>
