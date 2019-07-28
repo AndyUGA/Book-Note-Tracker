@@ -17,13 +17,12 @@
     <% }
     else { %>
       <%= result.BookTitle[index].Note[j].content %>
-      <br>
+      <br><br>
       <div class = "text-center">
        <%= result.BookTitle[index].Note[j].created %>
+       <br>
      </div>
   <%  } %>
-
-   <br>
    <a href = "/" data-toggle="modal" data-target="#exampleModal<%=j%>">
    <i class="fas fa-edit"></i>
 
