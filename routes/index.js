@@ -39,6 +39,7 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
         fullname = firstChar.toUpperCase() + name.substring(1, name.length);
 
         if (content == "dashboard") {
+          console.log(result);
           res.render("User/dashboard", {
             name: name,
             fullname: fullname,

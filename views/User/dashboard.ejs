@@ -1,9 +1,9 @@
 <h1 class="mt-4 titleAlign">Welcome <%= fullname %>! </h1>
 <br>
+<% if(result.BookTitle.length == 0) { %>
+<h5 class = "text-center"> Add a Book by Clicking Below! </h5>
 <br>
-
-
-
+   <% } %>
 <% for(var i=0; i < Math.ceil(result.BookTitle.length / 3); i++) { %>
 
   <div class="container text-center">
@@ -30,9 +30,10 @@
       <i class="fas fa-trash-alt fa-lg" title="Delete Book Entry"></i>
       </a>
       </div>
-
+      
 
     </div>
+
   </div>
   </div>
 
