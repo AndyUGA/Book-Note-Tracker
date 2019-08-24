@@ -5,6 +5,10 @@ html {
   position: relative;
 }
 
+li > a:hover {
+  background-color: white;
+}
+
 .bg {
   background-image: linear-gradient(#cdbdd6, #695e88);
 }
