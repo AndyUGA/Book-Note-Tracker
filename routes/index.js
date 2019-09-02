@@ -7,17 +7,17 @@ const router = express.Router();
 const { ensureAuthenticated } = require("../config/auth");
 
 var result;
+
 client.connect(err => {
+  const collection = client.db("test").collection("users");
+
 //Get Welcome page
 router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
 
 //Returns view for dashboard or profile
 router.get("/:content", ensureAuthenticated, (req, res) => {
   const content = req.params.content;
-
- 
-    const collection = client.db("test").collection("users");
-
+  
     collection.find({}).toArray(function(err, result) {
       let allResults = result;
       if (err) {
@@ -71,7 +71,6 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
   const index = req.params.index;
   const name = req.params.name;
 
-    const collection = client.db("test").collection("users");
     let bookTitle;
     let author;
     collection.find({}).toArray(function(err, result) {
@@ -107,12 +106,10 @@ router.post("/createBookEntry/:name", ensureAuthenticated, (req, res, next) => {
 
   const title = req.body.title;
   const author = req.body.author;
+  
+  collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Author: author, Note: [] } } });
 
-
-    const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Author: author, Note: [] } } });
-
-    res.redirect("/dashboard");
+  res.redirect("/dashboard");
 
 });
 
@@ -124,7 +121,7 @@ router.post("/insertNote/:index/:name/:bookTitle", ensureAuthenticated, (req, re
   const bookTitle = req.params.bookTitle;
   const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
 
-    const collection = client.db("test").collection("users");
+   
     collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": note } });
 
     res.redirect("/getBookNotes/" + index + "/" + name);
@@ -141,10 +138,9 @@ router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", ensureAuthenti
   const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
 
 
-    const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $set: { ["BookTitle.$.Note." + noteIndex]: note } });
+  collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $set: { ["BookTitle.$.Note." + noteIndex]: note } });
 
-    res.redirect("/getBookNotes/" + bookIndex + "/" + name);
+  res.redirect("/getBookNotes/" + bookIndex + "/" + name);
  
 });
 
@@ -153,11 +149,9 @@ router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next
   const name = req.params.name;
   const bookTitle = req.params.bookTitle;
 
+  collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $pull: { BookTitle: { Title: bookTitle } } });
 
-    const collection = client.db("test").collection("users");
-    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $pull: { BookTitle: { Title: bookTitle } } });
-
-    res.redirect("/dashboard");
+  res.redirect("/dashboard");
 
 });
 
