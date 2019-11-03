@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const passport = require("passport");
+const nodemailer = require("nodemailer");
+const uuidv4 = require("uuid/v4");
 
 const MongoClient = require("mongodb").MongoClient;
 
@@ -22,10 +24,13 @@ router.get("/login", (req, res) => {
 });
 
 //Register page
-router.get("/register", (req, res) => res.render("Account/register", { layout: "userLayout", title: "Register" }));
+router.get("/register", (req, res) =>
+  res.render("Account/register", { layout: "userLayout", title: "Register" })
+);
 
 //Register Post Request
 router.post("/register", (req, res) => {
+  console.log(33, req);
   const { name, email, password, password2 } = req.body;
 
   let errors = [];
@@ -65,10 +70,12 @@ router.post("/register", (req, res) => {
           password2
         });
       } else {
+        let token = uuidv4();
         const newUser = new User({
           name,
           email,
-          password
+          password,
+          token
         });
 
         //Hash password
@@ -81,8 +88,40 @@ router.post("/register", (req, res) => {
             //Save user
             newUser
               .save()
+              .then(() => {
+                transporter = nodemailer.createTransport({
+                  host: "smtp.gmail.com",
+                  service: "smtp.gmail.com",
+                  //secure: process.env.EMAIL_SMTP_SECURE, // lack of ssl commented this. You can uncomment it.
+                  auth: {
+                    user: "VincentRentalApplication@gmail.com",
+                    pass: "truongduluth123@@"
+                  }
+                });
+
+                let baseURL = req.protocol + "://" + req.hostname + "/activateAccount/";
+                let mailOptions = {
+                  from: "VincentRentalApplication@email.com", // sender address
+                  to: "tandy09@gmail.com", // list of receivers
+                  subject: "test", // Subject line
+                  html: `<p> Click on link to confirm account: ${baseURL}${token} </p>` // html body
+                };
+                transporter.sendMail(mailOptions, (error, info) => {
+                  if (error) {
+                    return console.log(error);
+                  }
+                  console.log("Message sent: %s", info.messageId);
+                  console.log(
+                    "Preview URL: %s",
+                    nodemailer.getTestMessageUrl(info)
+                  );
+                });
+              })
               .then(user => {
-                req.flash("success_msg", "You are now registered and can log in");
+                req.flash(
+                  "success_msg",
+                  `Please check your inbox for confirmation email`
+                );
                 res.redirect("/users/login");
               })
               .catch(err => console.log(err));
@@ -95,12 +134,15 @@ router.post("/register", (req, res) => {
 
 // Login
 router.post("/login", (req, res, next) => {
+
   passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/users/login",
     failureFlash: true
   })(req, res, next);
 });
+
+
 
 //logout
 router.get("/logout", (req, res) => {

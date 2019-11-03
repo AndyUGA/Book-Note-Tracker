@@ -9,10 +9,25 @@ const { ensureAuthenticated } = require("../config/auth");
 var result;
 
 client.connect(err => {
-  const collection = client.db("test").collection("users");
+  const collection = client.db("foo").collection("users");
 
 //Get Welcome page
 router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
+
+
+//Activate Account
+router.get("/activateAccount/:token", (req, res, next) => {
+  const token = req.params.token;
+  console.log("token is " + token);
+  collection.updateOne({token: token}, { $set: { isVerified: true } });
+  req.flash(
+    "success_msg",
+    `Your Account has been Activated. Please login`
+  );
+  res.redirect("/users/login");
+  
+});
+
 
 //Returns view for dashboard or profile
 router.get("/:content", ensureAuthenticated, (req, res) => {
@@ -39,7 +54,7 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
         fullname = firstChar.toUpperCase() + name.substring(1, name.length);
 
         if (content == "dashboard") {
-          console.log(result);
+         
           res.render("User/dashboard", {
             name: name,
             fullname: fullname,
@@ -59,7 +74,7 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
             title: "Profile"
           });
         } else if (content == "public") {
-          console.log(allResults);
+        
           res.render("User/Public", { title: "Public", allResults: allResults });
         }
       }
@@ -139,7 +154,7 @@ router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", ensureAuthenti
 
 
   collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $set: { ["BookTitle.$.Note." + noteIndex]: note } });
-
+  
   res.redirect("/getBookNotes/" + bookIndex + "/" + name);
  
 });
@@ -150,10 +165,13 @@ router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next
   const bookTitle = req.params.bookTitle;
 
   collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $pull: { BookTitle: { Title: bookTitle } } });
-
+ 
   res.redirect("/dashboard");
 
 });
+
+
+
 
 });
 
