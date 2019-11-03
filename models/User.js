@@ -19,6 +19,11 @@ const UserSchema = new mongoose.Schema({
   },
   BookTitle: {
     type: Array
+  },
+  isVerified: {
+    type: Boolean,
+    required: true,
+    default: false
   }
 });
 

@@ -19,9 +19,13 @@ module.exports = function(passport) {
         // Match password
         bcrypt.compare(password, user.password, (err, isMatch) => {
           if (err) throw err;
-          if (isMatch) {
+          if (isMatch && user.isVerified) {
             return done(null, user);
-          } else {
+          }
+          else if (user.isVerified == false) {
+            return done(null, false, { message: "User Account has not been validated" });
+          }
+           else {
             return done(null, false, { message: "Password incorrect" });
           }
         });

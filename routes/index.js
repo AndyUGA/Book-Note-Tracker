@@ -39,7 +39,7 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
         fullname = firstChar.toUpperCase() + name.substring(1, name.length);
 
         if (content == "dashboard") {
-          console.log(result);
+         
           res.render("User/dashboard", {
             name: name,
             fullname: fullname,
@@ -59,7 +59,7 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
             title: "Profile"
           });
         } else if (content == "public") {
-          console.log(allResults);
+        
           res.render("User/Public", { title: "Public", allResults: allResults });
         }
       }

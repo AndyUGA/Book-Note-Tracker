@@ -1,4 +1,4 @@
 module.exports = {
   MongoURI:
-   //add own DB info
+    "mongodb+srv://andy:test123@cluster0-iuoam.mongodb.net/foo?retryWrites=true"
 };
