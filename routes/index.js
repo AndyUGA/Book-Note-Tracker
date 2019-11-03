@@ -15,7 +15,7 @@ client.connect(err => {
 router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
 
 //Activate Account
-router.get("/activeAccount/:token", (req, res, next) => {
+router.get("/activateAccount/:token", (req, res, next) => {
   const token = req.params.token;
   console.log("token is " + token);
   collection.updateOne({token: token}, { $set: { isVerified: true } });
