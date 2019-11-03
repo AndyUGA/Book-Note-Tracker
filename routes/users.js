@@ -62,7 +62,7 @@ router.post("/register", (req, res) => {
       //When user exists
       if (user) {
         errors.push({ msg: "Email is already registered" });
-        res.render("register", {
+        res.render("Account/register", {
           errors,
           name,
           email,
@@ -89,20 +89,20 @@ router.post("/register", (req, res) => {
             newUser
               .save()
               .then(() => {
-                transporter = nodemailer.createTransport({
+                let transporter = nodemailer.createTransport({
                   host: "smtp.gmail.com",
                   service: "smtp.gmail.com",
                   //secure: process.env.EMAIL_SMTP_SECURE, // lack of ssl commented this. You can uncomment it.
                   auth: {
-                    user: "VincentRentalApplication@gmail.com",
-                    pass: "truongduluth123@@"
+                    user: process.env.email,
+                    pass: process.env.token
                   }
                 });
 
                 let baseURL = req.protocol + "://" + req.hostname + "/activateAccount/";
                 let mailOptions = {
-                  from: "VincentRentalApplication@email.com", // sender address
-                  to: "tandy09@gmail.com", // list of receivers
+                  from: "BookNoteTracker@gmail.com", // sender address
+                  to: email, // list of receivers
                   subject: "test", // Subject line
                   html: `<p> Click on link to confirm account: ${baseURL}${token} </p>` // html body
                 };
