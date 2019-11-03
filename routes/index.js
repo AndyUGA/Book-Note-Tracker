@@ -9,10 +9,21 @@ const { ensureAuthenticated } = require("../config/auth");
 var result;
 
 client.connect(err => {
-  const collection = client.db("test").collection("users");
+  const collection = client.db("foo").collection("users");
 
 //Get Welcome page
 router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
+
+//Activate Account
+router.get("/activeAccount/:token", (req, res, next) => {
+  const token = req.params.token;
+  console.log("token is " + token);
+  collection.updateOne({token: token}, { $set: { isVerified: true } });
+  
+  res.redirect("/users/login");
+ 
+});
+
 
 //Returns view for dashboard or profile
 router.get("/:content", ensureAuthenticated, (req, res) => {
@@ -154,6 +165,9 @@ router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next
   res.redirect("/dashboard");
 
 });
+
+
+
 
 });
 

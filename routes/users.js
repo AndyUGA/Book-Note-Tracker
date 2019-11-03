@@ -70,10 +70,12 @@ router.post("/register", (req, res) => {
           password2
         });
       } else {
+        let token = uuidv4();
         const newUser = new User({
           name,
           email,
-          password
+          password,
+          token
         });
 
         //Hash password
@@ -102,7 +104,7 @@ router.post("/register", (req, res) => {
                   from: "VincentRentalApplication@email.com", // sender address
                   to: "tandy09@gmail.com", // list of receivers
                   subject: "test", // Subject line
-                  html: `<p> Click on link to confirm account: uuid: ${baseURL}${uuidv4()} </p>` // html body
+                  html: `<p> Click on link to confirm account: uuid: ${baseURL}${token} </p>` // html body
                 };
                 transporter.sendMail(mailOptions, (error, info) => {
                   if (error) {
@@ -139,6 +141,8 @@ router.post("/login", (req, res, next) => {
     failureFlash: true
   })(req, res, next);
 });
+
+
 
 //logout
 router.get("/logout", (req, res) => {
