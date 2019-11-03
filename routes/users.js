@@ -104,7 +104,7 @@ router.post("/register", (req, res) => {
                   from: "VincentRentalApplication@email.com", // sender address
                   to: "tandy09@gmail.com", // list of receivers
                   subject: "test", // Subject line
-                  html: `<p> Click on link to confirm account: uuid: ${baseURL}${token} </p>` // html body
+                  html: `<p> Click on link to confirm account: ${baseURL}${token} </p>` // html body
                 };
                 transporter.sendMail(mailOptions, (error, info) => {
                   if (error) {
@@ -120,7 +120,7 @@ router.post("/register", (req, res) => {
               .then(user => {
                 req.flash(
                   "success_msg",
-                  "You are now registered and can log in"
+                  `Please check your inbox for confirmation email`
                 );
                 res.redirect("/users/login");
               })
