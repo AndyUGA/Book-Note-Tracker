@@ -9,7 +9,7 @@ const { ensureAuthenticated } = require("../config/auth");
 var result;
 
 client.connect(err => {
-  const collection = client.db("foo").collection("users");
+  const collection = client.db("test").collection("users");
 
 //Get Welcome page
 router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
