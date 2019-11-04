@@ -25,7 +25,7 @@ router.get("/login", (req, res) => {
 
 //Register page
 router.get("/register", (req, res) =>
-  res.render("Account/register", { layout: "userLayout", title: "Register" })
+  res.render("Account/register", { title: "Register", layout: "userLayout" })
 );
 
 //Register Post Request
@@ -49,13 +49,15 @@ router.post("/register", (req, res) => {
   }
 
   if (errors.length > 0) {
+
     res.render("Account/register", {
       errors,
       name,
       email,
       password,
       password2,
-      title: "Register"
+      title: "Register",
+      layout: "userLayout"
     });
   } else {
     User.findOne({ email: email }).then(user => {
@@ -99,22 +101,17 @@ router.post("/register", (req, res) => {
                   }
                 });
 
-                let baseURL = req.protocol + "://" + req.hostname + "/activateAccount/";
+                let baseURL = "https://notetracker.andytruong.dev" + "/activateAccount/";
                 let mailOptions = {
                   from: "BookNoteTracker@gmail.com", // sender address
                   to: email, // list of receivers
-                  subject: "test", // Subject line
+                  subject: "Email Verificaiton", // Subject line
                   html: `<p> Click on link to confirm account: ${baseURL}${token} </p>` // html body
                 };
                 transporter.sendMail(mailOptions, (error, info) => {
                   if (error) {
                     return console.log(error);
                   }
-                  console.log("Message sent: %s", info.messageId);
-                  console.log(
-                    "Preview URL: %s",
-                    nodemailer.getTestMessageUrl(info)
-                  );
                 });
               })
               .then(user => {
