@@ -5,6 +5,7 @@ const client = new MongoClient(uri, { useNewUrlParser: true });
 const express = require("express");
 const router = express.Router();
 const { ensureAuthenticated } = require("../config/auth");
+const uuidv4 = require("uuid/v4");
 
 var result;
 
@@ -169,6 +170,9 @@ router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next
   res.redirect("/dashboard");
 
 });
+
+
+
 
 
 
