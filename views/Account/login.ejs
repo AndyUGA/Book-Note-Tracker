@@ -2,8 +2,7 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <h1 class="text-center mb-3"><i class="fas fa-sign-in-alt"></i>  Login</h1>
-      <a href="/users/forgotPassword"> Forgot Password </a>
-      <a href="/users/resetPassword/sdkjfksdajf"> Reset Password </a>
+    
       <% include ../partials/messages %>
       <form action="/users/login" method="POST">
         <div class="form-group">
@@ -30,7 +29,10 @@
       </form>
       <p class="lead mt-4">
         No Account? <a href="/users/register">Register</a>
+        <br>
+         <a href="/users/forgotPassword">Forgot Password?</a>
       </p>
+      
     </div>
   </div>
 </div>
