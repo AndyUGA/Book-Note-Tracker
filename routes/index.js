@@ -33,7 +33,7 @@ router.get("/activateAccount/:token", (req, res, next) => {
 //Returns view for dashboard or profile
 router.get("/:content", ensureAuthenticated, (req, res) => {
   const content = req.params.content;
-  
+  console.log("Content is " + content);
     collection.find({}).toArray(function(err, result) {
       let allResults = result;
       if (err) {

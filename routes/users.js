@@ -20,6 +20,7 @@ client.connect(err => {
 
   //Login page
   router.get("/login", (req, res) => {
+    console.log("23");
     if (req.isAuthenticated()) {
       res.redirect("/dashboard");
     } else {
@@ -112,7 +113,7 @@ client.connect(err => {
                   let mailOptions = {
                     from: "BookNoteTracker@gmail.com", // sender address
                     to: email, // list of receivers
-                    subject: "Email Verificaiton", // Subject line
+                    subject: "Please Confirm your Account", // Subject line
                     html: `<p> Click on link to confirm account: ${baseURL}${token} </p>` // html body
                   };
                   transporter.sendMail(mailOptions, (error, info) => {
@@ -194,7 +195,7 @@ client.connect(err => {
     let mailOptions = {
       from: "BookNoteTracker@gmail.com", // sender address
       to: email, // list of receivers
-      subject: "Email Verificaiton", // Subject line
+      subject: "Password Reset", // Subject line
       html: `<p> Click on link to reset password: ${baseURL}${token} </p>` // html body
     };
     transporter.sendMail(mailOptions, (error, info) => {
