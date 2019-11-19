@@ -158,9 +158,9 @@ client.connect(err => {
   router.get("/resetPassword/:token", (req, res) => {
     const token = req.params.token;
 
-    collection.find({token: token}).toArray((err, result) => {
+    collection.find({ token: token }).toArray((err, result) => {
       console.log(result.length);
-      if(result.length != 1) {
+      if (result.length != 1) {
         req.flash("error_msg", "Invalid Page");
         res.redirect("/users/login");
       }
@@ -168,7 +168,7 @@ client.connect(err => {
         res.render("Account/resetPassword", { title: "Reset Password", token: token, layout: "userLayout" })
       }
     });
-    
+
   });
 
   //Send password reset link
@@ -218,12 +218,12 @@ client.connect(err => {
       bcrypt.hash(password, salt, (err, hash) => {
         if (err) throw err;
 
-        
+
         collection.findOneAndUpdate({ token: token }, { $set: { password: hash } });
       }));
-  
-      req.flash("success_msg", "Your password has been sucessfully reset!");
-      res.redirect("/users/login");
+
+    req.flash("success_msg", "Your password has been sucessfully reset!");
+    res.redirect("/users/login");
 
   });
 
