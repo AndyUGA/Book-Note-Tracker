@@ -20,7 +20,7 @@ client.connect(err => {
 
   //Login page
   router.get("/login", (req, res) => {
-    console.log("23");
+ 
     if (req.isAuthenticated()) {
       res.redirect("/dashboard");
     } else {
@@ -178,31 +178,35 @@ client.connect(err => {
     let token = uuidv4();
 
 
-    collection.findOneAndUpdate({ email: email }, { $set: { token: token } });
+    collection.findOneAndUpdate({ email: email }, { $set: { token: token } }).then(result => {
 
+      if (result.value != null) {
+        let transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          service: "smtp.gmail.com",
+          auth: {
+            user: process.env.email,
+            pass: process.env.token
+          }
+        });
 
-    let transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      service: "smtp.gmail.com",
-      //secure: process.env.EMAIL_SMTP_SECURE, // lack of ssl commented this. You can uncomment it.
-      auth: {
-        user: process.env.email,
-        pass: process.env.token
+        let baseURL = "https://notetracker.andytruong.dev" + "/users/resetPassword/";
+        let mailOptions = {
+          from: "BookNoteTracker@gmail.com",
+          to: email,
+          subject: "Password Reset", 
+          html: `<p> Click on link to reset password: ${baseURL}${token} </p>` 
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            return console.log(error);
+          }
+        })
+
       }
     });
 
-    let baseURL = "https://notetracker.andytruong.dev" + "/users/resetPassword/";
-    let mailOptions = {
-      from: "BookNoteTracker@gmail.com", // sender address
-      to: email, // list of receivers
-      subject: "Password Reset", // Subject line
-      html: `<p> Click on link to reset password: ${baseURL}${token} </p>` // html body
-    };
-    transporter.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        return console.log(error);
-      }
-    })
+
     req.flash("success_msg", "Password reset email has been sent!");
     res.redirect("/users/login");
 
