@@ -73,6 +73,7 @@ client.connect(err => {
         if (user) {
           errors.push({ msg: "Email is already registered" });
           res.render("Account/register", {
+            layout: "userLayout",
             errors,
             name,
             email,
