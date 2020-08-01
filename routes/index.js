@@ -12,29 +12,29 @@ var result;
 client.connect(err => {
   const collection = client.db("test").collection("users");
 
-//Get Welcome page
-router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
+  //Get Welcome page
+  router.get("/", (req, res) => res.render("User/Homepage", { layout: "User/Homepage" }));
 
 
-//Activate Account
-router.get("/activateAccount/:token", (req, res, next) => {
-  const token = req.params.token;
-  console.log("token is " + token);
-  collection.updateOne({token: token}, { $set: { isVerified: true } });
-  req.flash(
-    "success_msg",
-    `Your Account has been Activated. Please login`
-  );
-  res.redirect("/users/login");
-  
-});
+  //Activate Account
+  router.get("/activateAccount/:token", (req, res, next) => {
+    const token = req.params.token;
+    console.log("token is " + token);
+    collection.updateOne({ token: token }, { $set: { isVerified: true } });
+    req.flash(
+      "success_msg",
+      `Your Account has been Activated. Please login`
+    );
+    res.redirect("/users/login");
+
+  });
 
 
-//Returns view for dashboard or profile
-router.get("/:content", ensureAuthenticated, (req, res) => {
-  const content = req.params.content;
-  console.log("Content is " + content);
-    collection.find({}).toArray(function(err, result) {
+  //Returns view for dashboard or profile
+  router.get("/:content", ensureAuthenticated, (req, res) => {
+    const content = req.params.content;
+    console.log("Content is " + content);
+    collection.find({}).toArray(function (err, result) {
       let allResults = result;
       if (err) {
         res.send({ error: " An error has occurred" });
@@ -55,7 +55,7 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
         fullname = firstChar.toUpperCase() + name.substring(1, name.length);
 
         if (content == "dashboard") {
-         
+
           res.render("User/dashboard", {
             name: name,
             fullname: fullname,
@@ -75,21 +75,21 @@ router.get("/:content", ensureAuthenticated, (req, res) => {
             title: "Profile"
           });
         } else if (content == "public") {
-        
+
           res.render("User/Public", { title: "Public", allResults: allResults });
         }
       }
     });
   });
 
-//Get notes from selected book title
-router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
-  const index = req.params.index;
-  const name = req.params.name;
+  //Get notes from selected book title
+  router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
+    const index = req.params.index;
+    const name = req.params.name;
 
     let bookTitle;
     let author;
-    collection.find({}).toArray(function(err, result) {
+    collection.find({}).toArray(function (err, result) {
       if (err) {
         res.send({ error: " An error has occurred" });
       } else {
@@ -113,63 +113,63 @@ router.get("/getBookNotes/:index/:name", ensureAuthenticated, (req, res) => {
         });
       }
     });
-  
-});
 
-//Request to create book entry
-router.post("/createBookEntry/:name", ensureAuthenticated, (req, res, next) => {
-  const name = req.params.name;
+  });
 
-  const title = req.body.title;
-  const author = req.body.author;
-  
-  collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Author: author, Note: [] } } });
+  //Request to create book entry
+  router.post("/createBookEntry/:name", ensureAuthenticated, (req, res, next) => {
+    const name = req.params.name;
 
-  res.redirect("/dashboard");
+    const title = req.body.title;
+    const author = req.body.author;
 
-});
+    collection.updateOne({ name: name }, { $push: { BookTitle: { Title: title, Author: author, Note: [] } } });
 
-//Requst to create note
-router.post("/insertNote/:index/:name/:bookTitle", ensureAuthenticated, (req, res, next) => {
-  const name = req.params.name;
-  const index = req.params.index;
-  const title = req.body.title;
-  const bookTitle = req.params.bookTitle;
-  const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
+    res.redirect("/dashboard");
 
-   
+  });
+
+  //Requst to create note
+  router.post("/insertNote/:index/:name/:bookTitle", ensureAuthenticated, (req, res, next) => {
+    const name = req.params.name;
+    const index = req.params.index;
+    const title = req.body.title;
+    const bookTitle = req.params.bookTitle;
+    const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
+
+
     collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $push: { "BookTitle.$.Note": note } });
 
     res.redirect("/getBookNotes/" + index + "/" + name);
 
-});
+  });
 
-//Request to update note
-router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", ensureAuthenticated, (req, res, next) => {
-  const name = req.params.name;
-  const bookIndex = req.params.bookIndex;
-  const noteIndex = req.params.noteIndex;
-  const title = req.body.title;
-  const bookTitle = req.params.bookTitle;
-  const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
+  //Request to update note
+  router.post("/updateNote/:noteIndex/:name/:bookTitle/:bookIndex", ensureAuthenticated, (req, res, next) => {
+    const name = req.params.name;
+    const bookIndex = req.params.bookIndex;
+    const noteIndex = req.params.noteIndex;
+    const title = req.body.title;
+    const bookTitle = req.params.bookTitle;
+    const note = { content: req.body.note, created: new Date().toLocaleString("en-US", { timeZone: "America/New_York" }) };
 
 
-  collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $set: { ["BookTitle.$.Note." + noteIndex]: note } });
-  
-  res.redirect("/getBookNotes/" + bookIndex + "/" + name);
- 
-});
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $set: { ["BookTitle.$.Note." + noteIndex]: note } });
 
-//Request to delete book entry
-router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next) => {
-  const name = req.params.name;
-  const bookTitle = req.params.bookTitle;
+    res.redirect("/getBookNotes/" + bookIndex + "/" + name);
 
-  collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $pull: { BookTitle: { Title: bookTitle } } });
- 
-  res.redirect("/dashboard");
+  });
 
-});
+  //Request to delete book entry
+  router.post("/deleteNote/:bookTitle/:name", ensureAuthenticated, (req, res, next) => {
+    const name = req.params.name;
+    const bookTitle = req.params.bookTitle;
+
+    collection.updateOne({ name: name, "BookTitle.Title": bookTitle }, { $pull: { BookTitle: { Title: bookTitle } } });
+
+    res.redirect("/dashboard");
+
+  });
 
 
 
